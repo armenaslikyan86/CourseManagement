@@ -3,6 +3,8 @@ package am.mainserver.coursemanagement.domain;
 import am.mainserver.coursemanagement.common.RoleType;
 import com.google.common.collect.Lists;
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,22 +18,24 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
 public class User implements UserDetails {
 
+    private static final long serialVersionUID = -8632813353208855706L;
+
     @Id
-    @SequenceGenerator(name = "user-generator", sequenceName = "user-sequence")
-    @GeneratedValue(generator = "user-generator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_sequence")
+    @GeneratedValue(generator = "user_generator", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "age")
@@ -43,10 +47,10 @@ public class User implements UserDetails {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "role-type", nullable = false)
+    @Column(name = "role_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
@@ -65,6 +69,14 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Score> scores = new HashSet<>();
+
+    public User(final String email, final String passwordHash, final String firstName, final String lastName, final RoleType roleType) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roleType = roleType;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -100,4 +112,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

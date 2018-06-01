@@ -2,6 +2,8 @@ package am.mainserver.coursemanagement.domain;
 
 
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,12 +24,11 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 public class Course {
     @Id
-    @SequenceGenerator(name = "course-generator", sequenceName = "course-sequence")
-    @GeneratedValue(generator = "course-generator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "course_generator", sequenceName = "course_sequence")
+    @GeneratedValue(generator = "course_generator", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "name")
@@ -47,5 +48,37 @@ public class Course {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
     private Set<Score> scores = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        return new EqualsBuilder()
+                .append(id, course.id)
+                .append(name, course.name)
+                .append(duration, course.duration)
+                .append(description, course.description)
+                .append(price, course.price)
+                .append(users, course.users)
+                .append(scores, course.scores)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(name)
+                .append(duration)
+                .append(description)
+                .append(price)
+                .append(users)
+                .append(scores)
+                .toHashCode();
+    }
 }
 

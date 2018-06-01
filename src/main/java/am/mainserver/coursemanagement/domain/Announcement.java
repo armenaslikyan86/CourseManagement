@@ -1,6 +1,8 @@
 package am.mainserver.coursemanagement.domain;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
@@ -9,12 +11,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 public class Announcement {
     @Id
-    @SequenceGenerator(name = "announcement-generator", sequenceName = "announcement-sequence")
-    @GeneratedValue(generator = "announcement-generator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "announcement_generator", sequenceName = "announcement_sequence")
+    @GeneratedValue(generator = "announcement_generator", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "title")
@@ -22,4 +23,28 @@ public class Announcement {
 
     @Column(name = "description")
     private String description;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Announcement that = (Announcement) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(title, that.title)
+                .append(description, that.description)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(title)
+                .append(description)
+                .toHashCode();
+    }
 }
