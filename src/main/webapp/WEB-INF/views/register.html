@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <style>
+        body {
+            background-color: lightGray
+        }
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body>
+<h1>Add Student</h1>
+<form action="#" th:action="@{/register}" th:object="${user}"
+      method="post">
+
+    <table border="1">
+        <tr>
+            <td><select th:field="*{title}">
+                <option th:value="'MR'" th:text="MR"></option>
+                <option th:value="'MRS'" th:text="MRS"></option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{firstName}" placeholder="First Name" /></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{lastName}" placeholder="Last Name" /></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{age}" placeholder="Age" /></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{email}" placeholder="Email" /></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{passwordHash}" placeholder="Password"/></td>
+        </tr>
+        <tr>
+            <td><select th:field="*{roleType}">
+                <option th:value="'STUDENT'" th:text="STUDENT"></option>
+                <option th:value="'TUTOR'" th:text="TUTOR"></option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
