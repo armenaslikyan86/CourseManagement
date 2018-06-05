@@ -2,21 +2,17 @@ package am.mainserver.coursemanagement.web;
 
 import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
-import am.mainserver.coursemanagement.dto.ScoreDto;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
 import am.mainserver.coursemanagement.dto.UserDto;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.impl.EmailExistException;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,8 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
-    public String addStudent(Model model) {
+    @RequestMapping("/addUser")
+    public String addUser(Model model) {
         model.addAttribute("user", new UserCreationRequestDto());
         return "register";
     }
@@ -35,6 +31,12 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid final UserCreationRequestDto creationRequest) throws EmailExistException {
         userService.register(creationRequest);
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+//        model.addAttribute("user", new UserCreationRequestDto());
         return "login";
     }
 

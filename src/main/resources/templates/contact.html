@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{css/contact.css}" type="text/css"/>
+</head>
+<body>
+<h2 style="text-align: center">Authors</h2>
+<div class="wrapper">
+    <div class="card1">
+        <img id="img1" th:src="@{/img/edgar.jpg}"/>
+        <h1>Edgar Ayvazyan</h1>
+        <p>Java developer</p>
+        <p class="title1">CEO &amp; Founder,Course Manager Program</p>
+        <p><a id="website1" href="#">coursemanagement.am</a></p>
+        <div style="margin: 24px 0;">
+            <a href="https://www.linkedin.com/in/edgar-ayvazyan-54586673/"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/edgar.ayvazyan"><i class="fa fa-facebook"></i></a>
+        </div>
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Contact</button>
+        <div id="demo2" class="collapse">
+            <p>Tel. +37491666673 Yerevan,M.Melikyan 16/13</p>
+            <p>Email edgarayvazyan996@gmail.com</p>
+        </div>
+    </div>
+    <div class="card2">
+        <img id="2" th:src="@{/img/armen.jpg}" alt="Armen" style="width:100%"/>
+        <h1>Armen Aslikyan</h1>
+        <p class="title">Java developer</p>
+        <p class="title2">CEO &amp; Founder, Course Manager Program</p>
+        <p><a id="website" href="#">coursemanagement.am</a></p>
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/armen.aslikyan#_"><i class="fa fa-facebook"></i></a>
+        </div>
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">Contact</button>
+        <div id="demo1" class="collapse">
+            <p>Tel. +37455550044 Yerevan,Komitas 37/34</p>
+            <p>Email armenaslikyan@gmail.com</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

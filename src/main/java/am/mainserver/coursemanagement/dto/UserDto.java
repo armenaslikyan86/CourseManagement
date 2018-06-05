@@ -4,16 +4,11 @@ import am.mainserver.coursemanagement.common.RoleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@ToString
 @NoArgsConstructor
 @Getter
 @Setter
@@ -48,7 +43,7 @@ public class UserDto {
 
         UserDto userDto = (UserDto) o;
 
-        return new EqualsBuilder()
+        return new org.apache.commons.lang3.builder.EqualsBuilder()
                 .append(id, userDto.id)
                 .append(title, userDto.title)
                 .append(firstName, userDto.firstName)
@@ -65,7 +60,7 @@ public class UserDto {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
+        return new org.apache.commons.lang3.builder.HashCodeBuilder(17, 37)
                 .append(id)
                 .append(title)
                 .append(firstName)

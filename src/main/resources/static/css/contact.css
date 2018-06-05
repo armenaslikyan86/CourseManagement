@@ -1,0 +1,95 @@
+.wrapper {
+    width: 59%;
+    overflow: hidden;
+    margin-left: 282px;
+}
+.card1 {
+    max-width: 300px;
+    float: left;
+    text-align: center;
+    font-family: cursive;
+}
+.title1 {
+    color: black;
+    font-size: 18px;
+}
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+img#img1 {
+    width: 60%;
+}
+#website1 {
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+#website1:link {
+    color: red;
+}
+/* visited link */
+#website1:visited {
+    color: green;
+}
+/* mouse over link */
+#website1:hover {
+    color: hotpink;
+}
+/* selected link */
+#website1:active {
+    color: blue;
+}
+.card2 {
+    max-width: 300px;
+    /*margin: auto;*/
+    overflow: hidden;
+    float: right;
+    text-align: center;
+    font-family: cursive;
+}
+.title2 {
+    color: black;
+    font-size: 18px;
+}
+#website {
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+#website:link {
+    color: red;
+}
+/* visited link */
+#website:visited {
+    color: green;
+}
+/* mouse over link */
+#website:hover {
+    color: hotpink;
+}
+/* selected link */
+#website:active {
+    color: blue;
+}
+@media(max-width: 768px) {
+    .wrapper {
+        width: 100%;
+        margin-left: 0px;
+    }
+    .card1 {
+        max-width: unset;
+        margin: unset;
+        float: unset;
+        height: unset;
+        text-align: center;
+        font-family: cursive;
+    }
+    .card2 {
+        max-width: unset;
+        margin: unset;
+        overflow: unset;
+        float: unset;
+        text-align: center;
+        font-family: cursive;
+    }
+}

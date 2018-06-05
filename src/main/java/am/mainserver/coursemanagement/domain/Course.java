@@ -24,7 +24,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Course {
     @Id
     @SequenceGenerator(name = "course_generator", sequenceName = "course_sequence")

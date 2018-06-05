@@ -3,8 +3,6 @@ package am.mainserver.coursemanagement.domain;
 import am.mainserver.coursemanagement.common.RoleType;
 import com.google.common.collect.Lists;
 import lombok.*;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,6 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 public class User implements UserDetails {
 

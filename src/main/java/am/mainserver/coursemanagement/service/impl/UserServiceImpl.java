@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(creationRequest.getLastName());
         user.setAge(creationRequest.getAge());
         user.setEmail(creationRequest.getEmail());
+        user.setPhoneNumber(creationRequest.getPhoneNumber());
         user.setPasswordHash(BCrypt.hashpw(creationRequest.getPasswordHash(), BCrypt.gensalt(12)));
         user.setRoleType(creationRequest.getRoleType());
         return userRepository.save(user);

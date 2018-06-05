@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Announcement {
     @Id
     @SequenceGenerator(name = "announcement_generator", sequenceName = "announcement_sequence")

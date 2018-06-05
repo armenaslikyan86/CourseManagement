@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div id="content"></div>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a th:href="@{/about}">About</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a th:href="@{/contact}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="#" th:href="@{/addUser}" ><span class="glyphicon glyphicon-user"></span> Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <p><a href="https://www.workfront.com/" target="_blank"><img id="workfront" src="https://www.workfront.com/sites/default/files/workfront-logo.png"/></a></p>
+            <p><a href="http://aca.am" target="_blank"><img id="aca" src="http://i.imgur.com/o27kplS.png"/></a></p>
+            <p><a href="http://iunetworks.am" target="_blank"><img id="iunetworks" src="http://iunetworks.am/img/vector/iu-network-logo-in-colors.svg" /></a></p>
+            <iframe id="map"
+                    title="map"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=us&amp;geocode=&amp;q=yerevan&amp;sll=40.1792,44.4991&amp;sspn=340.1792,44.4991&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Yerevan,+Armenia&amp;z=11&amp;ll=40.1792,44.4991&amp;output=embed">
+            </iframe>
+        </div>
+        <div class="col-sm-8 text-left">
+            <h1>Welcome</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <hr/>
+            <h3>Test</h3>
+            <p>Lorem ipsum...</p>
+        </div>
+        <div class="col-sm-2 sidenav">
+            <div class="well">
+                <p>ADS</p>
+            </div>
+            <div class="well">
+                <p>ADS</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <p>&copy; Copyright 2018. Yerevan, RA. </p> <p>Authors: Armen Aslikyan &amp; Edgar Ayvazyan</p>
+</footer>
+</body>
+</html>
