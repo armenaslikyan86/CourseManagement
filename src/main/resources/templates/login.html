@@ -7,27 +7,32 @@
     <link th:href="@{css/login.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
 <div id="id01" class="modal">
-    <form class="modal-content animate" action="/action_page.php">
+    <form class="modal-content animate" th:action="@{/loggedin}" method="post">
         <div class="imgcontainer">
             <img th:src="@{/img/login.jpg}" alt="Avatar" class="avatar" style="width: 200px;height: 200px"/>
         </div>
         <div class="container">
-            <!--<label for="uname"><b>Username</b></label>-->
-            <input type="text" placeholder="Enter Username" name="uname" th:required="required"/>
-            <!--<label for="psw"><b>Password</b></label>-->
-            <input type="password" placeholder="Enter Password" name="psw" th:required="required"/>
+            <label><b>Email</b></label>
+            <input type="text" placeholder="Enter Username" name="email" th:required="required"/>
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password_hash" th:required="required"/>
             <button type="submit">Login</button>
             <label>
                 <input type="checkbox" checked="checked" name="remember"/> Remember me
             </label>
         </div>
         <div class="container" style="background-color:#f1f1f1">
-            <button type="button" th:onclick="'window.location.href=\'/' + '\''"  class="cancelbtn">Cancel</button>
+            <button type="button" th:onclick="'window.location.href=\'/' + '\''" class="cancelbtn">Cancel</button>
             <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
     </form>
 </div>
-
 </body>
 </html>

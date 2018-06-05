@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
 
     @RequestMapping("/addUser")
     public String addUser(Model model) {
@@ -35,8 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-//        model.addAttribute("user", new UserCreationRequestDto());
+    public String login() {
         return "login";
     }
 
@@ -46,6 +47,17 @@ public class UserController {
         final User user = userService.getByEmail(email);
         final UserDto userDto = convertToUserDto(user);
         return userDto;
+    }
+
+    @RequestMapping(value = "/profile" ,method = RequestMethod.GET)
+    public String profile(Model model, Principal principal){
+        if(principal == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute(
+                "message", "You are logged in as " + userService.getUserFullName(principal.getName()));
+        model.addAttribute("userID", "with user ID" + userService.getUserId(principal.getName()));
+        return "profile";
     }
 
     private UserDto convertToUserDto(final User user) {

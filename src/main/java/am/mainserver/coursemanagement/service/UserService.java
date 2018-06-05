@@ -9,4 +9,8 @@ public interface UserService {
     User getByEmail(String email);
 
     User register(UserCreationRequestDto creationRequest) throws EmailExistException;
+
+    String getUserFullName(String email);
+
+    Long getUserId(String email);
 }

@@ -12,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -32,19 +36,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http
-             .formLogin()
-                .and().authorizeRequests()
-//                .antMatchers("**/users/**").authenticated()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/login").permitAll();
-//                .and()
-//                .formLogin().permitAll();
+        http.authorizeRequests().
+                antMatchers("**/secure/**").access("hasAnyRole('ROLE_ADMIN')").
+                and().formLogin().  //login configuration
+                loginPage("/login").
+                loginProcessingUrl("/loggedin").
+                usernameParameter("email").
+                passwordParameter("password_hash").
+                defaultSuccessUrl("/profile").
+                and().logout().logoutSuccessUrl("/");
     }
 
     @Bean(name = "passwordEncoder")
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }

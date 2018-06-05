@@ -26,6 +26,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getUserFullName(String email) {
+        Assert.hasText(email, "email cannot be empty");
+        return getByEmail(email).getFirstName() + " " + getByEmail(email).getLastName();
+    }
+
+    @Override
     public User register(final UserCreationRequestDto creationRequest) throws EmailExistException {
         if(emailExist(creationRequest.getEmail())) {
             throw new EmailExistException("Email already exists");
@@ -50,4 +56,8 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public Long getUserId(String email) {
+        return userRepository.findByEmail(email).get().getId();
+    }
 }
