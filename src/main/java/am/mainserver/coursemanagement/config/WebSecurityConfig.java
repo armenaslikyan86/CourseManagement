@@ -38,12 +38,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().
                 antMatchers("**/secure/**").access("hasAnyRole('ROLE_ADMIN')").
+                antMatchers("**/profile/**").permitAll().
                 and().formLogin().  //login configuration
                 loginPage("/login").
                 loginProcessingUrl("/loggedin").
                 usernameParameter("email").
                 passwordParameter("password_hash").
-                defaultSuccessUrl("/profile").
+                defaultSuccessUrl("/profile/").
                 and().logout().logoutSuccessUrl("/");
     }
 

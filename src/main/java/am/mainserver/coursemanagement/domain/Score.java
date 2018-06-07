@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Score {
 
     @Id
-    @SequenceGenerator(name = "score_generator", sequenceName = "score_sequence")
+    @SequenceGenerator(name = "score_generator", sequenceName = "score_sequence", allocationSize = 1)
     @GeneratedValue(generator = "score_generator", strategy = GenerationType.SEQUENCE)
     private Long id;
 

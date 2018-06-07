@@ -11,14 +11,27 @@
     background-color: #f1f1f1;
     height: 100%;
 }
-#workfront{height: 20px}
-#aca{height: 40px; width: 40px}
-#iunetworks{width: 60%}
 #map{    height: 25%;
     width: 100%;
     position: absolute;
     bottom: 0px;
     left: 0px;}
+
+#companies_button {
+    display: none;
+}
+
+#user {
+    margin-top: 14px;
+    color: gold;
+}
+
+#id {
+    margin-top: 14px;
+    margin-right: 50px;
+    margin-left: 3px;
+    color: gold;
+}
 /* Set black background color, white text and some padding */
 footer {
     background-color: #555;
@@ -39,4 +52,53 @@ footer {
         position: static;
         width: 100%;
     }
+    #companies_button {
+        margin-bottom: 20px;
+        display: block;
+    }
+    .companies {
+        display: none;
+    }
+}
+
+#workfront {
+    height: 20px
+}
+#aca {
+    height: 40px;
+    width: 40px
+}
+#iuNetworks {
+    width: 60%
+}
+#SFL{
+    height: 65px;
+    width: 95px
+}
+#Staff{
+    height:40px;
+    width: 110px;
+}
+#Inomma{
+    height:50px;
+    width: 110px;
+}
+#Digitain{
+    height:70px;
+    width: 125px;
+}
+#Inecobank{
+    height:70px;
+    width: 125px;
+}
+#Git{
+    height:50px;
+    width: 135px;
+}
+#vmware{
+    height:50px;
+    width: 145px;
+}
+#space{
+    height: 200px;
 }

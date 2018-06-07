@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Manager</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<style type="text/css">
+    .panel {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0);
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .panel-primary {
+        border-color: #428BCA;
+    }
+
+    .panel-primary > .panel-heading {
+        background-color: #428BCA;
+        border-color: #428BCA;
+        color: #FFFFFF;
+    }
+
+    .panel-heading {
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        padding: 10px 15px;
+    }
+
+    .panel-title {
+        font-size: 16px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .panel-body:before, .panel-body:after {
+        content: " ";
+        display: table;
+    }
+
+    .panel-body:before, .panel-body:after {
+        content: " ";
+        display: table;
+    }
+
+    .panel-body:after {
+        clear: both;
+    }
+
+    .panel-body {
+        padding: 15px;
+    }
+
+    .panel-footer {
+        background-color: #F5F5F5;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-top: 1px solid #DDDDDD;
+        padding: 10px 15px;
+    }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+    .table-user-information > tbody > tr:first-child {
+        border-top: 0;
+    }
+
+    .table-user-information > tbody > tr > td {
+        border-top: 0;
+    }
+
+    #user_profile {
+        width: 100%;
+    }
+</style>
+
+<body>
+
+<div id="content"></div>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/profile/about}">About</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a th:href="@{/profile/contact}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="user" th:text="${message}"></li>
+                <li id="id" th:text="${userID}"></li>
+                <li><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <button id="companies_button" data-toggle="collapse" data-target=".companies">Companies</button>
+            <div class="companies" style="overflow: scroll ; overflow-x:hidden ; height:100%">
+                <p><a href="https://www.workfront.com/" target="_blank"><img id="workfront" src="https://www.workfront.com/sites/default/files/workfront-logo.png"/></a></p>
+                <p><a href="http://aca.am/hy/" target="_blank"><img id= "aca" src="http://i.imgur.com/o27kplS.png"/></a></p>
+                <p><a href="http://iunetworks.am/" target="_blank"><img id="iuNetworks" src="http://iunetworks.am/img/vector/iu-network-logo-in-colors.svg"/></a></p>
+                <p><a href="http://energizeglobal.com/" target="_blank"><img id="EGS" src="http://energizeglobal.com/wp-content/uploads/2015/01/Untitled-1-e1421848815907.png"/></a></p>
+                <p><a href="https://sflpro.com/" target="_blank"><img id="SFL" src="https://sflpro.com/wp-content/uploads/2016/06/sfllogo-01.png"/></a></p>
+                <p><a href="https://staff.am/en" target="_blank"><img id="Staff" src="http://images.staff.am/upload/f/f/2/6/ff2690ae.png"/></a></p>
+                <p><a href="https://inomma.com//" target="_blank"><img id="Inomma" src="http://pacific.ba/tc_files/images/radnje/INOMA/inoma_logo.jpg"/></a></p>
+                <p><a href="https://www.digitain.com/" target="_blank"><img id="Digitain" src="https://armacad.info/images/2016/11/DigitainLogo-zK4dW-NLGLwioH-yvumHUbN8GMhx7dJv.jpg"/></a></p>
+                <p><a href="https://ggg.instigatedesign.com/#1" target="_blank"><img id="Instigate  " src="https://ggg.instigatedesign.com/assets/uploads/instigate_design3.svg"/></a></p>
+                <p><a href="https://www.inecobank.am/hy/%D5%BF%D5%B8%D6%82%D5%B6/" target="_blank"><img id="Inecobank" src="http://arka.am/upload/resize_cache/iblock/863/344_258_2/8635ec64e35a1730e86954ba18f43f41.jpg"/></a></p>
+                <p><a href="https://github.com/" target="_blank"><img id="Git" src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Logo.png"/></a></p>
+                <p><a href="https://www.vmware.com/asean.html" target="_blank"><img id="vmware" src="https://duo.com/assets/img/partners/select-partners/vmware.png"/></a></p>
+                <p id="space"></p>
+            </div>
+
+            <iframe id="map"
+                    title="map"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=us&amp;geocode=&amp;q=yerevan&amp;sll=40.1792,44.4991&amp;sspn=340.1792,44.4991&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=Yerevan,+Armenia&amp;z=11&amp;ll=40.1792,44.4991&amp;output=embed">
+            </iframe>
+        </div>
+        <div id="profile" class="col-sm-8 text-left">
+            <div class="panel panel-primary" id="user_profile">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User information</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <img class="img-circle"
+                                 src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
+                                 alt="User Pic"/>
+                        </div>
+                        <div class="span6">
+                            <table class="table table-condensed table-responsive table-user-information" th:object="${user}">
+                                <tbody>
+                                <tr>
+                                    <td>Title</td>
+                                    <td th:text="${user.title}"></td>
+                                </tr>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td th:text="${user.firstName}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td th:text="${user.lastName}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Age</td>
+                                    <td th:text="${user.age}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text="${user.email}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td th:text="${user.description}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone Number</td>
+                                    <td th:text="${user.phoneNumber}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Role Type</td>
+                                    <td th:text="${user.roleType}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn  btn-primary" type="button"
+                            data-toggle="tooltip"
+                            data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>
+                    </button>
+                    <span class="pull-right">
+                                <button class="btn btn-warning" type="button"
+                                        data-toggle="tooltip"
+                                        data-original-title="Edit this user"><i
+                                        class="icon-edit icon-white"></i></button>
+                                <button class="btn btn-danger" type="button"
+                                        data-toggle="tooltip"
+                                        data-original-title="Remove this user"><i
+                                        class="icon-remove icon-white"></i></button>
+                            </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-2 sidenav" style="overflow: scroll ; overflow-x:hidden ; height:100%">
+            <div class="well" th:each="announcement : ${announcements}">
+                <h3 th:text="${announcement.title}"></h3>
+                <p th:text="${announcement.description}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <p>&copy; Copyright 2018. Yerevan, RA. </p>
+    <p>Authors: Armen Aslikyan &amp; Edgar Ayvazyan</p>
+</footer>
+</body>
+</html>

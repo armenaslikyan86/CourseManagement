@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Announcement {
     @Id
-    @SequenceGenerator(name = "announcement_generator", sequenceName = "announcement_sequence")
+    @SequenceGenerator(name = "announcement_generator", sequenceName = "announcement_sequence", allocationSize = 1)
     @GeneratedValue(generator = "announcement_generator", strategy = GenerationType.SEQUENCE)
     private Long id;
 

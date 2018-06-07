@@ -4,6 +4,7 @@ import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
 import am.mainserver.coursemanagement.dto.UserDto;
+import am.mainserver.coursemanagement.service.AnnouncementService;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.impl.EmailExistException;
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AnnouncementService announcementService;
 
 
     @RequestMapping("/addUser")
@@ -49,15 +53,16 @@ public class UserController {
         return userDto;
     }
 
-    @RequestMapping(value = "/profile" ,method = RequestMethod.GET)
-    public String profile(Model model, Principal principal){
-        if(principal == null) {
-            return "redirect:/login";
-        }
+
+    @GetMapping(value = "/profile/")
+    public String  profile_index(Model model, Principal principal) {
+        model.addAttribute("user", userService.getByEmail(principal.getName()));
         model.addAttribute(
                 "message", "You are logged in as " + userService.getUserFullName(principal.getName()));
-        model.addAttribute("userID", "with user ID" + userService.getUserId(principal.getName()));
-        return "profile";
+        model.addAttribute("userID", "with user ID " + userService.getUserId(principal.getName()));
+        model.addAttribute("announcements", announcementService.getAnnouncements());
+
+        return "profile_index";
     }
 
     private UserDto convertToUserDto(final User user) {
