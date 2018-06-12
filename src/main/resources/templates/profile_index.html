@@ -6,9 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/css/course.css}" type="text/css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+
+    <script th:inline="javascript" th:if="${action_successfull}">
+        /*<![CDATA[*/
+
+        var message = [[#{action.successfull}]];
+
+        alert(message);
+
+        /*]]>*/
+    </script>
+
 </head>
 <style type="text/css">
     .panel {
@@ -83,6 +95,138 @@
     #user_profile {
         width: 100%;
     }
+
+    #user_img {
+        width: 40%;
+    }
+
+    @media (max-width: 768px) {
+        #user_img {
+            width: 100%;
+        }
+    }
+
+
+
+    /*-------------------*/
+
+
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* Add a background color when the inputs get focus */
+    input[type=text]:focus, input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for all buttons */
+    .cancelbtn, .signupbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    .cancelbtn:hover, .signupbtn:hover {
+        opacity:1;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #f44336;
+    }
+
+    /* Float cancel and signup buttons and add an equal width */
+    .cancelbtn, .signupbtn {
+        float: left;
+        width: 50%;
+    }
+
+    /* Add padding to container elements */
+    .container {
+        padding: 50px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: #474e5d;
+        padding-top: 50px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* Style the horizontal ruler */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* The Close Button (x) */
+    .close {
+        position: absolute;
+        right: 35px;
+        top: 15px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #f1f1f1;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #f44336;
+        cursor: pointer;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .btn {
+        padding: 4px 10px;
+    }
+
+    /* Change styles for cancel button and signup button on extra small screens */
+    @media screen and (max-width: 300px) {
+        .cancelbtn, .signupbtn {
+            width: 100%;
+        }
+        dropdown{
+            padding-bottom: 10px;
+            width: 100px;
+        }
+        .nav>li{
+            width: 100px;
+        }
+    }
 </style>
 
 <body>
@@ -102,7 +246,13 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">Home</a></li>
                 <li><a th:href="@{/profile/about}">About</a></li>
-                <li><a href="#">Courses</a></li>
+                <li id="dropdown"><div class="dropdown">
+                    <a class="dropbtn">Courses</a>
+                    <div class="dropdown-content">
+                        <a href="#" th:each="course : ${courses}" th:text="${course.name}"></a>
+                    </div>
+                </div>
+                </li>
                 <li><a th:href="@{/profile/contact}">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -149,11 +299,13 @@
                 </div>
                 <div class="panel-body">
                     <div class="row-fluid">
-                        <div class="span3">
-                            <img class="img-circle"
-                                 src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
-                                 alt="User Pic"/>
+                        <div id = "user_img" class="span3">
+                            <img th:src="@{'/img/' + ${file_name}}" style="width: 100%"/>
                         </div>
+                        <form method="post" action="/upload" enctype="multipart/form-data" style=" line-height: 7px;">
+                            <input type="file" name="file" value="Choose File"/><br/><br/>
+                            <input type="submit" value="Submit" style="line-height: 20px"/>
+                        </form>
                         <div class="span6">
                             <table class="table table-condensed table-responsive table-user-information" th:object="${user}">
                                 <tbody>
@@ -199,21 +351,69 @@
                             data-toggle="tooltip"
                             data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>
                     </button>
+
                     <span class="pull-right">
+                                <button class="btn btn-warning" type="button"
+                                        data-toggle="tooltip"
+                                        data-original-title="Edit this user"><i
+                                        class="icon-edit icon-white"></i></button>
+                            </span>
+                    <span class="pull-right" th:if="${create_course}">
                                 <button class="btn btn-warning" type="button"
                                         data-toggle="tooltip"
                                         data-original-title="Edit this user"><i
                                         class="icon-edit icon-white"></i></button>
                                 <button class="btn btn-danger" type="button"
                                         data-toggle="tooltip"
-                                        data-original-title="Remove this user"><i
-                                        class="icon-remove icon-white"></i></button>
+                                        data-original-title="Remove this user"
+                                        onclick="document.getElementById('course').style.display='block'"
+                                        style="width:auto; margin-right: -16px"><i
+                                        class="icon-remove icon-white" th:text="${create_course}"></i></button>
                             </span>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-2 sidenav" style="overflow: scroll ; overflow-x:hidden ; height:100%">
+        <div id="course" class="modal">
+            <span onclick="document.getElementById('course').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <form class="modal-content" th:action="@{/create_course}" th:object="${course}" method="post">
+                <div class="container">
+                    <h1>Course creation form</h1>
+                    <p>Please fill in this form to create a course.</p>
+                    <hr/>
+                    <label th:for="name"><b>Name</b></label>
+                    <input type="text" placeholder="Enter name" name="name"  th:field="*{name}" th:required="required" />
+
+                    <label th:for="duration"><b>Duration</b></label>
+                    <input type="text" placeholder="Enter duration" name="duration" th:field="*{duration}" th:required="required" />
+                    <label th:for="description"><b>Description</b></label>
+                    <input type="text" placeholder="Enter description" name="description" th:field="*{description}" th:required="required" />
+
+                    <label th:for="price"><b>Price</b></label>
+                    <input type="text" placeholder="Enter price" name="price" th:field="*{price}" th:required="required" />
+
+                    <label th:for="startDate"><b>Start Date</b></label>
+                    <input type="text" placeholder="Enter start date" name="startDate" th:field="*{startDate}" th:required="required" />
+
+                    <label th:for="endDate"><b>End Date</b></label>
+                    <input type="text" placeholder="Enter end date" name="endDate" th:field="*{endDate}" th:required="required" />
+
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"/> Remember me
+                    </label>
+
+                    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms &amp; Privacy</a>.</p>
+
+                    <div class="clearfix">
+                        <button type="button" onclick="document.getElementById('course').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button type="submit" class="signupbtn">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-2 sidenav" style="overflow: scroll ; overflow-x:hidden ; height:114%">
             <div class="well" th:each="announcement : ${announcements}">
                 <h3 th:text="${announcement.title}"></h3>
                 <p th:text="${announcement.description}"></p>

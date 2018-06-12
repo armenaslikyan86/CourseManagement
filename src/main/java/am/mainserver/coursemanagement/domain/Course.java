@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +43,12 @@ public class Course {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "start_date")
+    private Timestamp startDate;
+
+    @Column(name = "end_date")
+    private Timestamp endDate;
+
     @ManyToMany(mappedBy = "courses")
     private Set<User> users = new HashSet<>();
 
@@ -75,7 +82,6 @@ public class Course {
                 .append(duration)
                 .append(description)
                 .append(price)
-                .append(users)
                 .append(scores)
                 .toHashCode();
     }

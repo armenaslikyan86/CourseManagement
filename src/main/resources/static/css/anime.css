@@ -1,0 +1,212 @@
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
+    float: right !important;
+}
+
+.words {
+    font-size: 10px;
+    width: 74%;
+    margin-right: 16%;
+}
+
+.fore1 {
+    position: absolute;
+    background-color: red;
+
+    top: 49px;
+    z-index: 9;
+    right: 8.5%;
+    width: 1px;
+    height: 0%;
+}
+
+.fiv1 {
+    position: absolute;
+    background-color: red;
+
+    top: 45%;
+    z-index: 9;
+    left: 5%;
+    width: 1px;
+    height: 0%;
+}
+
+.one1 {
+    position: absolute;
+    background-color: red;
+
+    top: 49px;
+    z-index: 9;
+    left: -78px;
+    width: 0%;
+    height: 1px;
+}
+
+.one2 {
+    position: absolute;
+    background-color: red;
+
+    top: 49px;
+    z-index: 9;
+    left: 26%;
+    width: 0%;
+    height: 1px;
+}
+
+.one3 {
+    position: absolute;
+    background-color: red;
+
+    top: 49px;
+    z-index: 9;
+    left: 74.5%;
+    width: 0%;
+    height: 1px;
+}
+
+.two1 {
+    position: absolute;
+    background-color: red;
+
+    top: 251px;
+    z-index: 9;
+    right: 8.5%;
+    width: 0%;
+    height: 1px;
+}
+
+.two2 {
+    position: absolute;
+    background-color: red;
+
+    top: 251px;
+    z-index: 9;
+    right: 57%;
+    width: 0%;
+    height: 1px;
+}
+
+.three1 {
+    position: absolute;
+    background-color: red;
+
+    bottom: 21.6%;
+    z-index: 9;
+    left: 45px;
+    width: 0%;
+    height: 1px;
+}
+
+.one11 {
+    width: 25%;
+    transition: 2s;
+}
+
+.one22 {
+    width: 36.5%;
+    transition: 1s;
+    transition-delay: 2s;
+}
+
+.one33 {
+    width: 17%;
+    transition: 1s;
+    transition-delay: 4s;
+}
+
+.two11 {
+    width: 42%;
+    transition: 1s;
+    transition-delay: 6s;
+}
+
+.two22 {
+    width: 38%;
+    transition: 1s;
+    transition-delay: 8s;
+}
+
+.three11 {
+    width: 63%;
+    transition: 1s;
+    transition-delay: 10s;
+}
+
+.fore11 {
+    height: 36%;
+    transition: 1s;
+    transition-delay: 5s;
+}
+
+.fiv11 {
+    height: 33.4%;
+    transition: 1s;
+    transition-delay: 9s;
+}
+
+.testt {
+    transition: 1s;
+    transition-delay: 1s;
+    filter: grayscale(100%);
+
+}
+
+.test1 {
+
+    filter: grayscale(100%);
+}
+
+.test2 {
+
+    filter: grayscale(100%);
+}
+
+.test3 {
+
+    filter: grayscale(100%);
+}
+
+.testt1 {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+    transition: 1s;
+    transition-delay: 2s;
+}
+
+.test11 {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+    transition: 1s;
+    transition-delay: 3s;
+}
+
+.test22 {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+    transition: 1s;
+    transition-delay: 7s;
+}
+
+.test33 {
+    transition: 1s;
+    transition-delay: 11s;
+    transform: scale(1.1);
+    filter: grayscale(0%);
+}
+
+.bulb {
+    transition: 1s;
+    filter: grayscale(100%);
+}
+
+.fi {
+    transition: 1s;
+    filter: grayscale(0%);
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}

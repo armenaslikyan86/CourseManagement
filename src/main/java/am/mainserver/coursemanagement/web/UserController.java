@@ -1,12 +1,15 @@
 package am.mainserver.coursemanagement.web;
 
+import am.mainserver.coursemanagement.common.RoleType;
 import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
 import am.mainserver.coursemanagement.dto.UserDto;
 import am.mainserver.coursemanagement.service.AnnouncementService;
+import am.mainserver.coursemanagement.service.CourseService;
 import am.mainserver.coursemanagement.service.UserService;
-import am.mainserver.coursemanagement.service.impl.EmailExistException;
+import am.mainserver.coursemanagement.service.exception.EmailExistException;
+import am.mainserver.coursemanagement.service.impl.ImageServiceImpl;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,8 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Controller
 public class UserController {
@@ -27,6 +29,11 @@ public class UserController {
     @Autowired
     private AnnouncementService announcementService;
 
+    @Autowired
+    private ImageServiceImpl imageService;
+
+    @Autowired
+    private CourseService courseService;
 
     @RequestMapping("/addUser")
     public String addUser(Model model) {
@@ -49,42 +56,37 @@ public class UserController {
     @GetMapping(value = "/get")
     public UserDto getUser(@Valid @NotBlank @RequestParam("email") final String email) {
         final User user = userService.getByEmail(email);
-        final UserDto userDto = convertToUserDto(user);
+        final UserDto userDto = userService.convertToUserDto(user);
         return userDto;
     }
 
 
     @GetMapping(value = "/profile/")
     public String  profile_index(Model model, Principal principal) {
+
+
         model.addAttribute("user", userService.getByEmail(principal.getName()));
         model.addAttribute(
                 "message", "You are logged in as " + userService.getUserFullName(principal.getName()));
         model.addAttribute("userID", "with user ID " + userService.getUserId(principal.getName()));
         model.addAttribute("announcements", announcementService.getAnnouncements());
+        model.addAttribute("courses", courseService.getCourses());
+
+
+        if (imageService.getImage(userService.getUserId(principal.getName())) != null) {
+            String[] tokens = imageService.getImage(userService.getUserId(principal.getName())).getImageUrl().split("/");
+            String file_name = tokens[6];
+            model.addAttribute("file_name", file_name);
+        }
+
+        if (userService.getByEmail(principal.getName()).getRoleType().equals(RoleType.TUTOR)) {
+            model.addAttribute("create_course", "CREATE COURSE");
+        }
+
+        model.addAttribute("course", new CourseDto());
 
         return "profile_index";
-    }
 
-    private UserDto convertToUserDto(final User user) {
-        final UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setRoleType(user.getRoleType());
-        final Set<CourseDto> courseDtoList = user.getCourses().stream()
-                .map(course -> {
-                    final CourseDto courseDto = new CourseDto();
-                    courseDto.setId(course.getId());
-                    courseDto.setName(course.getName());
-                    courseDto.setDescription(course.getDescription());
-                    courseDto.setDuration(course.getDuration());
-                    courseDto.setPrice(course.getPrice());
-                    return courseDto;
-                }).collect(Collectors.toSet());
-        userDto.setCourses(courseDtoList);
-        return userDto;
     }
-
 
 }

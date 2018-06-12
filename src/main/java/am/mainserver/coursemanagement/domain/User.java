@@ -3,6 +3,8 @@ package am.mainserver.coursemanagement.domain;
 import am.mainserver.coursemanagement.common.RoleType;
 import com.google.common.collect.Lists;
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,6 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class User implements UserDetails {
 
     private static final long serialVersionUID = -8632813353208855706L;
@@ -54,17 +55,25 @@ public class User implements UserDetails {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_course",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "course_id", unique = true) }
+    )
     private Set<Course> courses = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "user_course_score",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "score_id"))
-    @MapKeyJoinColumn(name = "course_id")
-    private Map<Course, Score> courseScoreMap = new HashMap<>();
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+    private Image image;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+//    @ManyToMany
+//    @JoinTable(name = "user_course_score",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "score_id"))
+//    @MapKeyJoinColumn(name = "course_id")
+//    private Map<Course, Score> courseScoreMap = new HashMap<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Score> scores = new HashSet<>();
 
     public User(final String email, final String passwordHash, final String firstName, final String lastName, final RoleType roleType) {
@@ -110,4 +119,46 @@ public class User implements UserDetails {
         return true;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return new EqualsBuilder()
+                .append(id, user.id)
+                .append(title, user.title)
+                .append(firstName, user.firstName)
+                .append(lastName, user.lastName)
+                .append(age, user.age)
+                .append(email, user.email)
+                .append(description, user.description)
+                .append(phoneNumber, user.phoneNumber)
+                .append(roleType, user.roleType)
+                .append(passwordHash, user.passwordHash)
+                .append(image, user.image)
+                .append(scores, user.scores)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(title)
+                .append(firstName)
+                .append(lastName)
+                .append(age)
+                .append(email)
+                .append(description)
+                .append(phoneNumber)
+                .append(roleType)
+                .append(passwordHash)
+                .append(image)
+                .append(scores)
+                .toHashCode();
+    }
 }

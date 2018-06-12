@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.Column;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +25,10 @@ public class CourseDto {
     private String description;
 
     private Double price;
+
+    private Timestamp startDate;
+
+    private Timestamp endDate;
 
     private Set<UserDto> users = new HashSet<>();
 

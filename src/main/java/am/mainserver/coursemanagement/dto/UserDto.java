@@ -29,6 +29,8 @@ public class UserDto {
 
     private String phoneNumber;
 
+    private String passwordHash;
+
     private RoleType roleType;
 
     private Set<CourseDto> courses = new HashSet<>();

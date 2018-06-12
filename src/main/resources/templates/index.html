@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/css/anime.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/css/course.css}" type="text/css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
-
+    <script type="text/javascript" th:src="@{/js/anime.js}"></script>
 </head>
 <body>
 
@@ -28,7 +30,14 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">Home</a></li>
                 <li><a th:href="@{/about}">About</a></li>
-                <li><a href="#">Courses</a></li>
+
+                <li id="dropdown"><div class="dropdown">
+                        <a class="dropbtn">Courses</a>
+                        <div class="dropdown-content">
+                            <a href="#" th:each="course : ${courses}" th:text="${course.name}"></a>
+                        </div>
+                    </div>
+                </li>
                 <li><a th:href="@{/contact}">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -67,19 +76,96 @@
             </iframe>
         </div>
         <div class="col-sm-8 text-left">
-            <h1>Welcome</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo consequat.</p>
+            <div class="description">Welcome to the Course Manager program and our new community. Discover the value of an open, collaborative effort by one of the greatest open-source teams in Armenia.</div>
             <hr/>
-            <h3>Test</h3>
-            <p>Lorem ipsum...</p>
+            <div id="anime" class="container-fluid sa" style="" dir="ltr">
+                <div class="container hidden-xs hidden-sm sa" style="margin-bottom: 80px; width: 100%">
+                    <div class="row sa">
+                        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 sa" style="position: relative;height: 560px">
+
+            <span class="one1">
+
+            </span>
+                            <span class="one2">
+
+            </span>
+                            <span class="one3">
+
+            </span>
+                            <span class="two1">
+
+            </span>
+                            <span class="two2">
+
+            </span>
+                            <span class="fore1">
+
+            </span>
+                            <span class="fiv1">
+
+            </span>
+                            <div style="position: absolute;text-align: center;z-index: 99" class="test testt">
+                                <img src="http://belmagan.com/demopay/serv2020/wp-content/uploads/2018/05/score2.png"
+                                     class="ik"/>
+                                <h5>
+                                    FOR THE NON-GEEKS
+                                </h5>
+                                <p class="words">
+                                    while(true) { I love you; } <br /> This means I love you <br /> infinitely forever or until the system crashes.
+                                </p>
+
+                            </div>
+                            <div style="position: absolute;z-index:9;text-align: center;left: 49%;right: 12%;"
+                                 class="test1">
+                                <img src="http://belmagan.com/demopay/serv2020/wp-content/uploads/2018/05/score2.png"/>
+                                <h5>
+                                    STEVE JOBS (1955 - 2011)
+                                </h5>
+                                <p class="words">
+                                    Design is not just what it looks like and feels like. Design is how it works.
+                                </p>
+
+                            </div>
+                            <!--<div class="border1"></div>-->
+                            <div style="position: absolute;z-index:9;text-align: center;top: 35%;right: 32%;"
+                                 class="test2">
+                                <img src="http://belmagan.com/demopay/serv2020/wp-content/uploads/2018/05/score2.png"/>
+                                <h5>
+                                    LINUS TORVALDS
+                                </h5>
+                                <p class="words">
+                                    Talk is cheap. Show me your code.
+                                </p>
+                            </div>
+                            <!--<div class="border2"></div>-->
+                            <span class="three1">
+
+            </span>
+                            <div style="position: absolute;text-align: center;bottom: 0%;right: 6%" class="test3">
+                                <img src="http://belmagan.com/demopay/serv2020/wp-content/uploads/2018/05/score2.png"/>
+                                <h5>
+                                    TELL ME ANY 4 VERSIONS OF JAVA
+                                </h5>
+                                <p class="words">
+                                    Mar Java Mit Java Lut Java Main Sadke Java
+                                </p>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 sa">
+                            <img id="te"
+                                 src="http://belmagan.com/demopay/serv2020/wp-content/themes/serv5new/images/bulb.png"
+                                 class="img-responsive bulb"/>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-sm-2 sidenav" style="overflow: scroll ; overflow-x:hidden ; height:100%">
+        <div class="col-sm-2 sidenav" style="overflow: scroll ; overflow-x:hidden ; height:114%">
             <div class="well" th:each="announcement : ${announcements}">
                 <h3 th:text="${announcement.title}"></h3>
                 <p th:text="${announcement.description}"></p>
