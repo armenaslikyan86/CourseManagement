@@ -30,13 +30,12 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">Home</a></li>
                 <li><a th:href="@{/about}">About</a></li>
-
                 <li id="dropdown"><div class="dropdown">
-                        <a class="dropbtn">Courses</a>
-                        <div class="dropdown-content">
-                            <a href="#" th:each="course : ${courses}" th:text="${course.name}"></a>
-                        </div>
+                    <a class="dropbtn">Courses</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/course(id=${course.id})}" th:each="course : ${courses}" th:text="${course.name}"></a>
                     </div>
+                </div>
                 </li>
                 <li><a th:href="@{/contact}">Contact</a></li>
             </ul>

@@ -3,12 +3,11 @@ package am.mainserver.coursemanagement.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,9 +25,9 @@ public class CourseDto {
 
     private Double price;
 
-    private Timestamp startDate;
+    private Date startDate;
 
-    private Timestamp endDate;
+    private Date endDate;
 
     private Set<UserDto> users = new HashSet<>();
 

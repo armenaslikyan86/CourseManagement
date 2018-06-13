@@ -10,11 +10,9 @@ import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.exception.CourseExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.sql.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getByNameAndStartDateAndEndDate(String name, Timestamp t1, Timestamp t2) {
+    public Course getByNameAndStartDateAndEndDate(String name, Date t1, Date t2) {
         return courseRepository.getByNameAndAndStartDateAndAndEndDate(name, t1, t2);
     }
 
@@ -92,5 +90,10 @@ public class CourseServiceImpl implements CourseService {
             courses.add(course);
         }
         return courses;
+    }
+
+    @Override
+    public Course getCourseById(Long id) {
+        return courseRepository.getCourseById(id);
     }
 }

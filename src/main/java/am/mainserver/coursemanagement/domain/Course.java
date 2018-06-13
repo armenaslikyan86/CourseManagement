@@ -4,11 +4,14 @@ package am.mainserver.coursemanagement.domain;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.TemporalType.DATE;
 
 //
 //@Entity 
@@ -43,11 +46,12 @@ public class Course {
     @Column(name = "price")
     private Double price;
 
+
     @Column(name = "start_date")
-    private Timestamp startDate;
+    private Date startDate;
 
     @Column(name = "end_date")
-    private Timestamp endDate;
+    private Date endDate;
 
     @ManyToMany(mappedBy = "courses")
     private Set<User> users = new HashSet<>();

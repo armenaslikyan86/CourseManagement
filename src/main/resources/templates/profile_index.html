@@ -249,7 +249,7 @@
                 <li id="dropdown"><div class="dropdown">
                     <a class="dropbtn">Courses</a>
                     <div class="dropdown-content">
-                        <a href="#" th:each="course : ${courses}" th:text="${course.name}"></a>
+                        <a th:href="@{/course(id=${course.id})}" th:each="course : ${courses}" th:text="${course.name}"></a>
                     </div>
                 </div>
                 </li>
@@ -352,12 +352,14 @@
                             data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>
                     </button>
 
-                    <span class="pull-right">
-                                <button class="btn btn-warning" type="button"
-                                        data-toggle="tooltip"
-                                        data-original-title="Edit this user"><i
-                                        class="icon-edit icon-white"></i></button>
-                            </span>
+                    <span th:if="!${create_course}">
+                        <button class="btn btn-warning" type="button"
+                                data-toggle="tooltip"
+                                data-original-title="Edit this user"><i
+                                class="icon-edit icon-white"></i>
+                        </button>
+                    </span>
+
                     <span class="pull-right" th:if="${create_course}">
                                 <button class="btn btn-warning" type="button"
                                         data-toggle="tooltip"
@@ -367,9 +369,9 @@
                                         data-toggle="tooltip"
                                         data-original-title="Remove this user"
                                         onclick="document.getElementById('course').style.display='block'"
-                                        style="width:auto; margin-right: -16px"><i
+                                        style="width:auto;margin-right: -16px"><i
                                         class="icon-remove icon-white" th:text="${create_course}"></i></button>
-                            </span>
+                    </span>
                 </div>
             </div>
         </div>

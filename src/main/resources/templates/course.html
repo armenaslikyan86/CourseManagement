@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    .panel {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0);
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .panel-primary {
+        border-color: #428BCA;
+    }
+
+    .panel-primary > .panel-heading {
+        background-color: #428BCA;
+        border-color: #428BCA;
+        color: #FFFFFF;
+    }
+
+    .panel-heading {
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        padding: 10px 15px;
+    }
+
+    .panel-title {
+        font-size: 16px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .panel-body:before, .panel-body:after {
+        content: " ";
+        display: table;
+    }
+
+    .panel-body:before, .panel-body:after {
+        content: " ";
+        display: table;
+    }
+
+    .panel-body:after {
+        clear: both;
+    }
+
+    .panel-body {
+        padding: 15px;
+    }
+
+    .panel-footer {
+        background-color: #F5F5F5;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-top: 1px solid #DDDDDD;
+        padding: 10px 15px;
+    }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+    .table-user-information > tbody > tr:first-child {
+        border-top: 0;
+    }
+
+    .table-user-information > tbody > tr > td {
+        border-top: 0;
+    }
+
+    #user_profile {
+        width: 100%;
+    }
+
+    #course_img {
+        width: 40%;
+    }
+
+    @media (max-width: 768px) {
+        #user_img {
+            width: 100%;
+        }
+    }
+
+</style>
+<body>
+
+<div id="profile" class="col-sm-8 text-left">
+    <div class="panel panel-primary" id="user_profile">
+        <div class="panel-heading">
+            <h3 class="panel-title">Course information</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row-fluid">
+                <div id = "course_img" class="span3">
+                    <img th:src="@{'/img/' + ${course_img_name}}" style="width: 100%"/>
+                </div>
+                <div class="span6">
+                    <table class="table table-condensed table-responsive table-user-information"
+                           th:object="${course}">
+                        <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td th:text="${course.name}"></td>
+                        </tr>
+                        <tr>
+                            <td>Duration</td>
+                            <td th:text="${course.duration}"></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td th:text="${course.description}"></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td th:text="${course.price}"></td>
+                        </tr>
+                        <tr>
+                            <td>Start Date</td>
+                            <td th:text="${course.startDate}"></td>
+                        </tr>
+                        <tr>
+                            <td>End Date</td>
+                            <td th:text="${course.endDate}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button class="btn  btn-primary" type="button"
+                    data-toggle="tooltip"
+                    data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
