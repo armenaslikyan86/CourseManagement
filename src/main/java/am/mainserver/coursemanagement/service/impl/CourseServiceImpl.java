@@ -11,7 +11,6 @@ import am.mainserver.coursemanagement.service.exception.CourseExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-
 import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;

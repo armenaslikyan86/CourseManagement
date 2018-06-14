@@ -2,7 +2,6 @@ package am.mainserver.coursemanagement.service;
 
 
 import am.mainserver.coursemanagement.domain.Course;
-import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.service.exception.CourseExistException;
 

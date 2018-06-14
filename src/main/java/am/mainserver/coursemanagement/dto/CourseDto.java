@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -462,7 +462,7 @@
                                 </tr>
                                 <tr>
                                     <td>Enrolled Courses</td>
-                                    <td th:each="course : ${enrolled_courses}" th:text="${course.name}"></td>
+                                    <td th:each="course : ${user.getCourses()}" th:text="${course.name}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -530,7 +530,7 @@
                     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms &amp; Privacy</a>.</p>
 
                     <div class="clearfix">
-                        <button type="button" onclick="document.getElementById('user').style.display='none'" class="cancelbtn">Cancel</button>
+                        <button type="button" onclick="document.getElementById('course').style.display='none'" class="cancelbtn">Cancel</button>
                         <button type="submit" class="signupbtn">Create</button>
                     </div>
                 </div>

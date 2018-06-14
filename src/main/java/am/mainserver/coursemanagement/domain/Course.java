@@ -4,24 +4,11 @@ package am.mainserver.coursemanagement.domain;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.TemporalType.DATE;
-
-//
-//@Entity 
-//
-//@Table( 
-//        name = "language", 
-//        uniqueConstraints = { 
-//        @UniqueConstraint(name = "afasfsa", columnNames = {"short_code_2", "deleted"})
-//        }
-//         )
 
 @Entity
 @Table(name = "course")
@@ -56,7 +43,7 @@ public class Course {
     @Column(name = "tutor")
     private String tutorName;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")

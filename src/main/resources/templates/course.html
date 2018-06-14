@@ -268,8 +268,8 @@
                             </tbody>
                         </table>
                         <div class="panel-footer" th:if="!${course_register}">
-                            <form th:action="@{/enroll(id=${course.id})}" method="post" th:object="${course}">
-                                <button class="btn btn-warning" type="submit"
+                            <form th:action="@{/enroll(id=${course.id})}" method="post">
+                                <button th:if="!${tutor_register}" class="btn btn-warning" type="submit"
                                         data-toggle="tooltip"
                                         data-original-title="Edit this user"><i
                                         class="icon-edit icon-white"></i>Register</button>

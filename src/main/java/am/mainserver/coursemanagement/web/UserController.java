@@ -11,7 +11,6 @@ import am.mainserver.coursemanagement.service.CourseService;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.exception.EmailExistException;
 import am.mainserver.coursemanagement.service.impl.ImageServiceImpl;
-import lombok.val;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
+
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -68,6 +72,14 @@ public class UserController {
     public String  profile_index(Model model, Principal principal) {
 
 
+        List<String> enrolled_courses = new ArrayList<>();
+        userService.getByEmail(principal.getName()).getCourses().forEach(course -> {
+            enrolled_courses.add(course.getName());
+        });
+
+        model.addAttribute("enrolled_courses", Arrays.toString(enrolled_courses.toArray()));
+
+
         model.addAttribute("user", userService.getByEmail(principal.getName()));
         model.addAttribute(
                 "message", "You are logged in as " + userService.getUserFullName(principal.getName()));
@@ -102,9 +114,10 @@ public class UserController {
 
     @PostMapping(value = "/enroll")
     public String enroll(@RequestParam("id") Long id, Principal principal) {
-        User user = userService.getByEmail(principal.getName());
-        user.getCourses().add(courseService.getCourseById(id));
-        return "redirect:/profile/";
+       User user = userService.getByEmail(principal.getName());
+       user.getCourses().add(courseService.getCourseById(id));
+       userService.update(user.getId(), user);
+       return "redirect:/profile/";
     }
 
 }

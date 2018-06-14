@@ -1,16 +1,13 @@
 package am.mainserver.coursemanagement.service.impl;
 
-import am.mainserver.coursemanagement.config.HibernateUtilConfig;
 import am.mainserver.coursemanagement.domain.Image;
 import am.mainserver.coursemanagement.dto.ImageDto;
 import am.mainserver.coursemanagement.repository.ImageRepository;
 import am.mainserver.coursemanagement.service.ImageService;
-import lombok.val;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Decoder;

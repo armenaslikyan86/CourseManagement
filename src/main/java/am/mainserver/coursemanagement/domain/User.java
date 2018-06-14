@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -59,7 +58,7 @@ public class User implements UserDetails {
     @JoinTable(
             name = "user_course",
             joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "course_id", unique = true) }
+            inverseJoinColumns = { @JoinColumn(name = "course_id") }
     )
     private Set<Course> courses = new HashSet<>();
 

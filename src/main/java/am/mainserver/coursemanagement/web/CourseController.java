@@ -15,8 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Controller
 public class CourseController {
@@ -56,6 +55,7 @@ public class CourseController {
 
         if (principal != null && userService.getByEmail(principal.getName()).getRoleType().equals(RoleType.TUTOR)) {
 
+            model.addAttribute("tutor_register", "true");
             userService.getByEmail(principal.getName()).getCourses().forEach(course1 -> {
                 if (course1.getId() == id) {
                     model.addAttribute("editable", "true");

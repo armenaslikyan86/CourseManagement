@@ -4,7 +4,6 @@ import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
 import am.mainserver.coursemanagement.dto.UserDto;
 import am.mainserver.coursemanagement.service.exception.EmailExistException;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface UserService {
 
