@@ -29,6 +29,8 @@ public class CourseDto {
 
     private Date endDate;
 
+    private String tutorName;
+
     private Set<UserDto> users = new HashSet<>();
 
     @Override

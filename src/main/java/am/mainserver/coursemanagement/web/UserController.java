@@ -1,6 +1,7 @@
 package am.mainserver.coursemanagement.web;
 
 import am.mainserver.coursemanagement.common.RoleType;
+import am.mainserver.coursemanagement.domain.Course;
 import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
@@ -10,9 +11,11 @@ import am.mainserver.coursemanagement.service.CourseService;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.exception.EmailExistException;
 import am.mainserver.coursemanagement.service.impl.ImageServiceImpl;
+import lombok.val;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +75,7 @@ public class UserController {
         model.addAttribute("announcements", announcementService.getAnnouncements());
         model.addAttribute("courses", courseService.getCourses());
 
+        model.addAttribute("enrolled_courses", userService.getByEmail(principal.getName()).getCourses());
 
         if (imageService.getImage(userService.getUserId(principal.getName())) != null) {
             String[] tokens = imageService.getImage(userService.getUserId(principal.getName())).getImageUrl().split("/");
@@ -87,6 +91,20 @@ public class UserController {
 
         return "profile_index";
 
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public String updateUser(User user, @RequestParam("id") Long id) {
+        user.setPasswordHash(BCrypt.hashpw(user.getPasswordHash(), BCrypt.gensalt(12)));
+        userService.update(id, user);
+        return "redirect:/profile/";
+    }
+
+    @PostMapping(value = "/enroll")
+    public String enroll(@RequestParam("id") Long id, Principal principal) {
+        User user = userService.getByEmail(principal.getName());
+        user.getCourses().add(courseService.getCourseById(id));
+        return "redirect:/profile/";
     }
 
 }

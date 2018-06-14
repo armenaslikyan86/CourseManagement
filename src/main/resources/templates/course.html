@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
     <title>Course Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:inline="javascript" th:if="${course_register}">
+        /*<![CDATA[*/
+
+        var message = [[#{course.register}]];
+
+        alert(message);
+
+        /*]]>*/
+    </script>
 </head>
 
 <style>
@@ -93,6 +103,124 @@
         }
     }
 
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* Add a background color when the inputs get focus */
+    input[type=text]:focus, input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for all buttons */
+    .cancelbtn, .signupbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    .cancelbtn:hover, .signupbtn:hover {
+        opacity:1;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #f44336;
+    }
+
+    /* Float cancel and signup buttons and add an equal width */
+    .cancelbtn, .signupbtn {
+        float: left;
+        width: 50%;
+    }
+
+    /* Add padding to container elements */
+    .container {
+        padding: 50px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: #474e5d;
+        padding-top: 50px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* Style the horizontal ruler */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* The Close Button (x) */
+    .close {
+        position: absolute;
+        right: 35px;
+        top: 15px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #f1f1f1;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #f44336;
+        cursor: pointer;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .btn {
+        padding: 4px 10px;
+    }
+
+    /* Change styles for cancel button and signup button on extra small screens */
+    @media screen and (max-width: 300px) {
+        .cancelbtn, .signupbtn {
+            width: 100%;
+        }
+
+        .dropdown {
+            padding-bottom: 10px;
+            width: 100px;
+        }
+
+        .nav > li {
+            width: 100px;
+        }
+    }
 </style>
 <body>
 
@@ -107,45 +235,95 @@
                     <img th:src="@{'/img/' + ${course_img_name}}" style="width: 100%"/>
                 </div>
                 <div class="span6">
-                    <table class="table table-condensed table-responsive table-user-information"
-                           th:object="${course}">
-                        <tbody>
-                        <tr>
-                            <td>Name</td>
-                            <td th:text="${course.name}"></td>
-                        </tr>
-                        <tr>
-                            <td>Duration</td>
-                            <td th:text="${course.duration}"></td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td th:text="${course.description}"></td>
-                        </tr>
-                        <tr>
-                            <td>Price</td>
-                            <td th:text="${course.price}"></td>
-                        </tr>
-                        <tr>
-                            <td>Start Date</td>
-                            <td th:text="${course.startDate}"></td>
-                        </tr>
-                        <tr>
-                            <td>End Date</td>
-                            <td th:text="${course.endDate}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <table class="table table-condensed table-responsive table-user-information" th:object="${course}">
+                            <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td  th:text="${course.name}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>Duration</td>
+                                <td th:text="${course.duration}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td th:text="${course.description}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td  th:text="${course.price}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>Start Date</td>
+                                <td th:text="${course.startDate}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>End Date</td>
+                                <td th:text="${course.endDate}" th:contenteditable="${editable}"></td>
+                            </tr>
+                            <tr>
+                                <td>Course taught by: </td>
+                                <td th:text="${tutor}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="panel-footer" th:if="!${course_register}">
+                            <form th:action="@{/enroll(id=${course.id})}" method="post" th:object="${course}">
+                                <button class="btn btn-warning" type="submit"
+                                        data-toggle="tooltip"
+                                        data-original-title="Edit this user"><i
+                                        class="icon-edit icon-white"></i>Register</button>
+                            </form>
+                        </div>
+                        <div class="panel-footer" th:if="${tutor_edit}">
+                            <button  onclick="document.getElementById('course').style.display='block'" class="btn  btn-primary" type="button"
+                                    data-toggle="tooltip"
+                                    data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>Edit
+                            </button>
+                        </div>
                 </div>
             </div>
         </div>
-        <div class="panel-footer">
-            <button class="btn  btn-primary" type="button"
-                    data-toggle="tooltip"
-                    data-original-title="Send message to user"><i class="icon-envelope icon-white"></i>
-            </button>
-        </div>
     </div>
+</div>
+
+
+<div id="course" class="modal">
+    <span onclick="document.getElementById('course').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" th:action="@{/updateCourse(id=${course.id})}" th:object="${course}" method="post">
+        <div class="container">
+            <h1>Course Editing form</h1>
+            <p>Please fill in this form to edit a course.</p>
+            <hr/>
+            <label th:for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter name" name="name"  th:field="*{name}" th:required="required" />
+
+            <label th:for="duration"><b>Duration</b></label>
+            <input type="text" placeholder="Enter duration" name="duration" th:field="*{duration}" th:required="required" />
+            <label th:for="description"><b>Description</b></label>
+            <input type="text" placeholder="Enter description" name="description" th:field="*{description}" th:required="required" />
+
+            <label th:for="price"><b>Price</b></label>
+            <input type="text" placeholder="Enter price" name="price" th:field="*{price}" th:required="required" />
+
+            <label th:for="startDate"><b>Start Date</b></label>
+            <input type="text" placeholder="Enter start date" name="startDate" th:field="*{startDate}" th:required="required" />
+
+            <label th:for="endDate"><b>End Date</b></label>
+            <input type="text" placeholder="Enter end date" name="endDate" th:field="*{endDate}" th:required="required" />
+
+            <label>
+                <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"/> Remember me
+            </label>
+
+            <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms &amp; Privacy</a>.</p>
+
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('course').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Update</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

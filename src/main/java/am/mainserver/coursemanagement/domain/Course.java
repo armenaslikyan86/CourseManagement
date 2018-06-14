@@ -53,6 +53,9 @@ public class Course {
     @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "tutor")
+    private String tutorName;
+
     @ManyToMany(mappedBy = "courses")
     private Set<User> users = new HashSet<>();
 

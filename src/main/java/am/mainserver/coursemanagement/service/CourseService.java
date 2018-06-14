@@ -2,6 +2,7 @@ package am.mainserver.coursemanagement.service;
 
 
 import am.mainserver.coursemanagement.domain.Course;
+import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.service.exception.CourseExistException;
 
@@ -20,4 +21,6 @@ public interface CourseService {
     List<Course> getCourses();
 
     Course getCourseById(Long id);
+
+    Course update(Course updatedCourse, Long courseId);
 }

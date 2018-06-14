@@ -1,5 +1,6 @@
 package am.mainserver.coursemanagement.web;
 
+import am.mainserver.coursemanagement.common.RoleType;
 import am.mainserver.coursemanagement.domain.Course;
 import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class CourseController {
@@ -26,9 +27,11 @@ public class CourseController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/create_course")
     public String createCourse(Principal principal, @Validated final CourseDto courseDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws CourseExistException {
         courseDto.getUsers().add(userService.convertToUserDto(userService.getByEmail(principal.getName())));
+        courseDto.setTutorName(userService.getUserFullName(principal.getName()));
         User updatedUser = userService.getByEmail(principal.getName());
         updatedUser.getCourses().add(courseService.convertToCourse(courseDto));
         userService.update(userService.getUserId(principal.getName()), updatedUser);
@@ -40,14 +43,29 @@ public class CourseController {
     }
 
     @GetMapping("/course")
-    public String getCourse(@RequestParam("id") Long id, Model model) {
+    public String getCourse(@RequestParam("id") Long id, Model model, Principal principal) {
 
         Course course = courseService.getCourseById(id);
         String courseName = course.getName().toLowerCase();
 
         model.addAttribute("course", course);
 
-        if (courseName.startsWith("java") && courseName.charAt(4) != 's') {
+        if (principal == null) {
+            model.addAttribute("course_register", "true");
+        }
+
+        if (principal != null && userService.getByEmail(principal.getName()).getRoleType().equals(RoleType.TUTOR)) {
+
+            userService.getByEmail(principal.getName()).getCourses().forEach(course1 -> {
+                if (course1.getId() == id) {
+                    model.addAttribute("editable", "true");
+                    model.addAttribute("tutor_edit", "ok");
+                }
+            });
+
+        }
+
+        if (courseName.equals("java") || ( courseName.contains("java") && courseName.length()>=4 && courseName.charAt(4) != 's')) {
             courseName = "java.jpg";
             model.addAttribute("course_img_name", courseName);
         } else if (courseName.contains("c#") || courseName.contains("c sharp")) {
@@ -63,6 +81,16 @@ public class CourseController {
             model.addAttribute("course_img_name", "default.jpg");
         }
 
+
+        model.addAttribute("tutor", courseService.getCourseById(id).getTutorName());
+
         return "course";
+    }
+
+    @RequestMapping(value = "/updateCourse", method = RequestMethod.POST)
+    public String updateCourse(Course course, @RequestParam("id") Long id, Principal principal) {
+        course.setTutorName(userService.getUserFullName(principal.getName()));
+        courseService.update(course, id);
+        return "redirect:/profile/";
     }
  }

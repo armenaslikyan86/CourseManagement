@@ -9,6 +9,7 @@ import am.mainserver.coursemanagement.service.CourseService;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.exception.CourseExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -64,6 +65,7 @@ public class CourseServiceImpl implements CourseService {
         course.setPrice(courseDto.getPrice());
         course.setStartDate(courseDto.getStartDate());
         course.setEndDate(courseDto.getEndDate());
+        course.setTutorName(courseDto.getTutorName());
         final Set<User> userSet = courseDto.getUsers().stream()
                 .map(user -> {
                     final User user1 = new User();
@@ -95,5 +97,32 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseById(Long id) {
         return courseRepository.getCourseById(id);
+    }
+
+    @Override
+    public Course update(Course updatedCourse, Long courseId) {
+        Course course = courseRepository.getCourseById(courseId);
+        course.setName(updatedCourse.getName());
+        course.setDuration(updatedCourse.getDuration());
+        course.setDescription(updatedCourse.getDescription());
+        course.setPrice(updatedCourse.getPrice());
+        course.setStartDate(updatedCourse.getStartDate());
+        course.setEndDate(updatedCourse.getEndDate());
+        course.setTutorName(updatedCourse.getTutorName());
+        final Set<User> userSet = updatedCourse.getUsers().stream()
+                .map(user -> {
+                    final User user_element = new User();
+                    user_element.setTitle(user.getTitle());
+                    user_element.setFirstName(user.getFirstName());
+                    user_element.setLastName(user.getLastName());
+                    user_element.setAge(user.getAge());
+                    user_element.setEmail(user.getEmail());
+                    user_element.setPhoneNumber(user.getPhoneNumber());
+                    user_element.setPasswordHash(BCrypt.hashpw(user.getPasswordHash(), BCrypt.gensalt(12)));
+                    user_element.setRoleType(user.getRoleType());
+                    return user_element;
+                }).collect(Collectors.toSet());
+        course.setUsers(userSet);
+        return courseRepository.save(course);
     }
 }

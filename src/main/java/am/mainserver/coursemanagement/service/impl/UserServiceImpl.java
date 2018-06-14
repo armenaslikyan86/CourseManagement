@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
                     course.setPrice(course_element.getPrice());
                     course.setStartDate(course_element.getStartDate());
                     course.setEndDate(course_element.getEndDate());
+                    course.setTutorName(course_element.getTutorName());
                     return course;
                 }).collect(Collectors.toSet());
         user.setCourses(courseSet);
@@ -121,6 +122,7 @@ public class UserServiceImpl implements UserService {
                     courseDto.setPrice(course.getPrice());
                     courseDto.setStartDate(course.getStartDate());
                     courseDto.setEndDate(course.getEndDate());
+                    courseDto.setTutorName(course.getTutorName());
                     return courseDto;
                 }).collect(Collectors.toSet());
         userDto.setCourses(courseDtoList);
@@ -151,6 +153,7 @@ public class UserServiceImpl implements UserService {
                     course1.setPrice(course.getPrice());
                     course1.setStartDate(course.getStartDate());
                     course1.setEndDate(course.getEndDate());
+                    course1.setTutorName(course.getTutorName());
                     return course1;
                 }).collect(Collectors.toSet());
         user.setCourses(courseList);
