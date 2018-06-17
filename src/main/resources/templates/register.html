@@ -26,9 +26,10 @@
                 <input type="text" placeholder="Last Name" name="last_name" th:field="*{lastName}" th:required="required"/>
 
                 <label><b>Age</b></label>
-                <input type="text" placeholder="Age" name="age" th:field="*{age}"/>
+                <input type="text" placeholder="Age" name="age" th:field="*{age}" th:required="required"/>
 
                 <label><b>Email</b></label>
+                <p th:if="${email_validate}" th:text="#{email.validate}" style="color:red;"></p>
                 <input type="text" placeholder="Email" name="email" th:field="*{email}" th:required="required"/>
 
                 <label><b>Password</b></label>
@@ -36,7 +37,7 @@
                        th:required="required"/>
 
                 <label><b>Phone Number</b></label>
-                <input type="text" placeholder="Phone Number" name="phone_number" th:field="*{phoneNumber}"/>
+                <input type="text" placeholder="Phone Number" name="phone_number" th:field="*{phoneNumber}" th:required="required"/>
 
                 <label><b>Role Type</b></label>
                 <select th:field="*{roleType}" title="roleType">
@@ -51,7 +52,7 @@
                 <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms &amp; Privacy</a>.</p>
 
                 <div class="clearfix">
-                    <button type="button" class="cancelbtn">
+                    <button type="button" th:onclick="'window.location.href=\'/' + '\''" class="cancelbtn">
                         Cancel
                     </button>
                     <button type="submit" class="signupbtn">Sign Up</button>

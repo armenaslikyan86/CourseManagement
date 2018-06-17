@@ -104,6 +104,16 @@
         #user_img {
             width: 100%;
         }
+
+        body {
+            width: fit-content;
+            margin: 0;
+        }
+
+        .col-sm-2, .col-sm-8 {
+            padding-left: unset;
+            padding-right: unset;
+        }
     }
 
 
@@ -484,10 +494,10 @@
                     </span>
 
                     <span class="pull-right" th:if="${create_course}">
-                                <button class="btn btn-warning" type="button"
+                                <button onclick="document.getElementById('students').style.display='block'" class="btn btn-warning" type="button"
                                         data-toggle="tooltip"
                                         data-original-title="Edit this user"><i
-                                        class="icon-edit icon-white"></i></button>
+                                        class="icon-edit icon-white"></i>Show students</button>
                                 <button class="btn btn-danger" type="button"
                                         data-toggle="tooltip"
                                         data-original-title="Remove this user"
@@ -535,6 +545,22 @@
                     </div>
                 </div>
             </form>
+        </div>
+
+        <div id="students" class="modal modal-content">
+            <span onclick="document.getElementById('students').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                <div class="container">
+                    <h1>Created courses</h1>
+                    <hr/>
+                    <table class="table table-condensed table-responsive table-user-information">
+                        <tbody>
+                        <tr th:each="course : ${students}">
+                            <td><a th:text="${course.name}" th:href="@{/students(id=${course.id})}" style="font-size: 30px"></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
 
 

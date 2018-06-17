@@ -1,7 +1,6 @@
 package am.mainserver.coursemanagement.web;
 
 import am.mainserver.coursemanagement.common.RoleType;
-import am.mainserver.coursemanagement.domain.Course;
 import am.mainserver.coursemanagement.domain.User;
 import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.dto.UserCreationRequestDto;
@@ -14,17 +13,25 @@ import am.mainserver.coursemanagement.service.impl.ImageServiceImpl;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Controller
@@ -42,6 +49,9 @@ public class UserController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @RequestMapping("/addUser")
     public String addUser(Model model) {
         model.addAttribute("user", new UserCreationRequestDto());
@@ -49,9 +59,46 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@Valid final UserCreationRequestDto creationRequest) throws EmailExistException {
+    public String register(@Valid final UserCreationRequestDto creationRequest, HttpServletRequest request, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws EmailExistException {
+
+        //Email Validation
+
+        if (!emailValidation(creationRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("email_validate", "ok");
+            return "redirect:/addUser";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/addUser";
+        }
+
+
         userService.register(creationRequest);
-        return "login";
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(creationRequest.getEmail(), creationRequest.getPasswordHash());
+        request.getSession();
+
+        token.setDetails(new WebAuthenticationDetails(request));
+        try {
+            Authentication auth = authenticationManager.authenticate(token);
+
+            SecurityContextHolder.getContext().setAuthentication(auth);}
+            catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/profile/";
+    }
+
+    private boolean emailValidation(String email) {
+
+        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
     }
 
     @GetMapping("/login")
@@ -68,17 +115,8 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/profile/")
+    @GetMapping(value = {"/profile/", "/profile"})
     public String  profile_index(Model model, Principal principal) {
-
-
-        List<String> enrolled_courses = new ArrayList<>();
-        userService.getByEmail(principal.getName()).getCourses().forEach(course -> {
-            enrolled_courses.add(course.getName());
-        });
-
-        model.addAttribute("enrolled_courses", Arrays.toString(enrolled_courses.toArray()));
-
 
         model.addAttribute("user", userService.getByEmail(principal.getName()));
         model.addAttribute(
@@ -89,14 +127,20 @@ public class UserController {
 
         model.addAttribute("enrolled_courses", userService.getByEmail(principal.getName()).getCourses());
 
+        String file_name;
         if (imageService.getImage(userService.getUserId(principal.getName())) != null) {
             String[] tokens = imageService.getImage(userService.getUserId(principal.getName())).getImageUrl().split("/");
-            String file_name = tokens[6];
+            file_name = tokens[6];
+            model.addAttribute("file_name", file_name);
+        } else {
+            file_name = "noimage.jpg";
             model.addAttribute("file_name", file_name);
         }
 
+
         if (userService.getByEmail(principal.getName()).getRoleType().equals(RoleType.TUTOR)) {
             model.addAttribute("create_course", "CREATE COURSE");
+            model.addAttribute("students", userService.getByEmail(principal.getName()).getCourses());
         }
 
         model.addAttribute("course", new CourseDto());
@@ -106,8 +150,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    public String updateUser(User user, @RequestParam("id") Long id) {
+    public String updateUser(User user, @RequestParam("id") Long id, Principal principal) {
         user.setPasswordHash(BCrypt.hashpw(user.getPasswordHash(), BCrypt.gensalt(12)));
+        user.setCourses(userService.getByEmail(principal.getName()).getCourses());
         userService.update(id, user);
         return "redirect:/profile/";
     }

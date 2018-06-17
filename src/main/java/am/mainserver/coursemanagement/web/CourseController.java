@@ -7,6 +7,7 @@ import am.mainserver.coursemanagement.dto.CourseDto;
 import am.mainserver.coursemanagement.service.CourseService;
 import am.mainserver.coursemanagement.service.UserService;
 import am.mainserver.coursemanagement.service.exception.CourseExistException;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -92,5 +97,19 @@ public class CourseController {
         course.setTutorName(userService.getUserFullName(principal.getName()));
         courseService.update(course, id);
         return "redirect:/profile/";
+    }
+
+    @GetMapping(value = "/students")
+    public String getStudents(@RequestParam("id") Long id, Principal principal, Model model) {
+
+        List<User> students = new ArrayList<>();
+
+        courseService.getCourseById(id).getUsers().forEach(user -> {
+            if (user.getId() != userService.getByEmail(principal.getName()).getId()) {
+                students.add(user);
+            }
+        });
+        model.addAttribute("students", students);
+        return "students";
     }
  }
